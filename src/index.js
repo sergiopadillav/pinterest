@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const multer = require("multer");
 const uuid = require("uuid/v4")
 const { format } = require("timeago.js");
+const cors = require("cors");
 
 //INICIALIZACIONES
 const app = express();
@@ -19,6 +20,7 @@ app.set("view engine", "ejs");
 //MIDDLEWARES
 app.use(morgan("dev"));
 app.use(express.urlencoded({extended: false}));
+app.use(cors({ origin: "http://localhost:4200" }));
 const storage = multer.diskStorage({
     destination: path.join(__dirname,"public/img/uploads"),
     filename: (req, file, cb, filename) => {
@@ -26,6 +28,7 @@ const storage = multer.diskStorage({
     }
 });
 app.use(multer({storage}).single("image"));
+
 
 // VARIABLES GOBALES
 app.use((req, res, next) => { //creas middleware para el timeago

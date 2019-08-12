@@ -7,7 +7,8 @@ const Image = require("../models/Image");
 
 router.get("/", async (req, res) => {
     const images = await Image.find();
-    res.render("index", {images});
+     res.json(images);
+    //res.render("index", {images});
 });
  
 router.get("/upload", (req,res) => {
@@ -25,8 +26,13 @@ router.post("/upload", async (req,res) => {
     image.size = req.file.size;
 
     await image.save();
-    console.log(image);
-    res.redirect("/");
+    // console.log(image);
+    // res.redirect("/");
+
+    res.json({
+        "status" : "Imagen uploaded"
+      });
+
 });
 
 router.get("/image/:id", async (req,res) => {
